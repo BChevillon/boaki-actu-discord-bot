@@ -1,0 +1,32 @@
+{
+  "name": "boaki-actu-discord-bot",
+  "version": "1.0.0",
+  "description": "Official discord bot of the Boaki Actu community. Offers community news and interactive features.",
+  "author": "Benoit CHEVILLON <benoit.chevillon6@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BChevillon/boaki-actu-discord-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BChevillon/boaki-actu-discord-bot/issues",
+    "email": "benoit.chevillon6@gmail.com"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "main": "index.js",
+  "keywords": [
+    "discord",
+    "bot",
+    "boaki",
+    "boaki-actu",
+    "kipulkai",
+    "moderation",
+    "news"
+  ],
+  "dependencies": {
+    "discord.js": "^14.16.3",
+    "node-schedule": "^2.1.1"
+  }
+}

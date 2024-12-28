@@ -1,0 +1,11 @@
+# Dependency directories
+node_modules/
+
+# Package lock
+package-lock.json
+
+# Bot config
+config.json
+
+# Data
+data/
