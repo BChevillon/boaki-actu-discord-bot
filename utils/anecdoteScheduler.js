@@ -7,7 +7,7 @@ const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
  * Publishes a random anecdote in a Discord channel with interactive buttons.
  */
 function startAnecdoteScheduler(client, channelId, roleId) {
-    schedule.scheduleJob("0 0 * * 1", async () => {
+    schedule.scheduleJob("0 12 * * 1", async () => {
         try {
             const channel = await client.channels.fetch(channelId);
             if (!channel || !channel.isTextBased()) {
