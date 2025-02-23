@@ -1,3 +1,5 @@
+const { MessageFlags } = require("discord.js");
+
 /**
  * Handles button interactions for anecdotes and dates.
  * @param {Interaction} interaction - The interaction object from Discord.js
@@ -13,7 +15,7 @@ async function handleInteraction(interaction, roleId) {
             if (!role) { // Role not found
                 await interaction.reply({
                     content: "Les notifications sont indisponibles, désolé ! 🤖",
-                    ephemeral: true,
+                    flags: MessageFlags.Ephemeral
                 });
                 return;
             }
@@ -22,20 +24,20 @@ async function handleInteraction(interaction, roleId) {
                 await member.roles.remove(roleId);
                 await interaction.reply({
                     content: "🔕 Anecdotes : les notifications ont été désactivées.",
-                    ephemeral: true,
+                    flags: MessageFlags.Ephemeral
                 });
             } else { // Role not assigned
                 await member.roles.add(roleId);
                 await interaction.reply({
                     content: "🔔 Anecdotes : les notifications ont été activées.",
-                    ephemeral: true,
+                    flags: MessageFlags.Ephemeral
                 });
             }
         } catch (error) {
             console.error("[ERROR] An error occurred while handling the interaction:", error);
             await interaction.reply({
                 content: "Un problème est survenu, désolé ! 🤖",
-                ephemeral: true,
+                flags: MessageFlags.Ephemeral
             });
         }
     }

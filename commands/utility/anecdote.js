@@ -8,7 +8,7 @@
  * - Response: Sends the anecdote content with interactive buttons in the specified channel and confirms the publication.
  */
 
-const { SlashCommandBuilder, PermissionFlagsBits, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const { SlashCommandBuilder, PermissionFlagsBits, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require("discord.js");
 const fs = require("fs");
 const path = require("path");
 const config = require("../../config.json");
@@ -36,7 +36,7 @@ module.exports = {
         if (!requiredRoles.some(roleId => memberRoles.has(roleId))) {
             return interaction.reply({
                 content: "❌ Vous n'avez pas les permissions nécessaires pour exécuter cette commande.",
-                ephemeral: true,
+                flags: MessageFlags.Ephemeral
             });
         }
 
@@ -74,12 +74,15 @@ module.exports = {
             });
             await interaction.reply({
                 content: `✅ Anecdote publiée avec succès dans ${targetChannel}.`,
-                ephemeral: true
+                flags: MessageFlags.Ephemeral
             });
             console.log(`[INFO] Anecdote published successfully, ID : ${anecdote.id}`);
         } catch (error) {
             console.error("[ERROR] An error occurred while publishing the anecdote:", error);
-            await interaction.reply({ content: "❌ Une erreur est survenue lors de la publication.", ephemeral: true });
+            await interaction.reply({
+                content: "❌ Une erreur est survenue lors de la publication.",
+                flags: MessageFlags.Ephemeral
+            });
         }
     },
 };

@@ -1,10 +1,11 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, PermissionFlagsBits, MessageFlags } = require("discord.js");
 const config = require("../../config.json");
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("modifiermessage")
 		.setDescription("Modifier un message déjà existant écrit par KiRobot.")
+		.setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
 		.addChannelOption(option =>
 			option
 				.setName("canal_source")
@@ -36,7 +37,7 @@ module.exports = {
 		if (!requiredRoles.some(roleId => memberRoles.has(roleId))) {
 			return interaction.reply({
 				content: "❌ Tu n'as pas la permission d'exécuter cette commande.",
-				ephemeral: true,
+				flags: MessageFlags.Ephemeral
 			});
 		}
 
@@ -45,7 +46,7 @@ module.exports = {
 		if (!targetChannel.isTextBased() || !sourceChannel.isTextBased()) { // Verify that both channels are text-based
 			return interaction.reply({
 				content: "❌ L'un des canaux sélectionnés n'est pas textuel.",
-				ephemeral: true,
+				flags: MessageFlags.Ephemeral
 			});
 		}
 
@@ -57,7 +58,7 @@ module.exports = {
 			if (targetMessage.author.id !== interaction.client.user.id) { // Check if the target message was sent by the bot
 				return interaction.reply({
 					content: "❌ Ce message n'a pas été envoyé par KiRobot.",
-					ephemeral: true,
+					flags: MessageFlags.Ephemeral
 				});
 			}
 			// Fetch the source message from the specified source channel
@@ -66,13 +67,13 @@ module.exports = {
 			await targetMessage.edit(newContent); // Edit the target message with the content from the source message
 			return interaction.reply({
 				content: "✅ Le message a été modifié avec succès.",
-				ephemeral: true,
+				flags: MessageFlags.Ephemeral
 			});
 		} catch (error) {
 			console.error("[ERROR] Error while executing /modifiermessage command:", error);
 			return interaction.reply({
 				content: "❌ Une erreur est survenue lors de la modification du message.",
-				ephemeral: true,
+				flags: MessageFlags.Ephemeral
 			});
 		}
 	},

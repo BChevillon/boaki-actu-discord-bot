@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const { SlashCommandBuilder, PermissionFlagsBits, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require("discord.js");
 const fs = require("fs");
 const path = require("path");
 const config = require("../../config.json");
@@ -15,7 +15,7 @@ const config = require("../../config.json");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("datenotable")
-        .setDescription("Publie l'évènement notable du jour.")
+        .setDescription("Publier l'évènement notable du jour.")
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
         .addChannelOption(option =>
             option.setName("canal")
@@ -30,7 +30,7 @@ module.exports = {
         if (!requiredRoles.every(roleId => memberRoles.has(roleId))) {
             return interaction.reply({
                 content: "❌ Vous n'avez pas les permissions nécessaires pour exécuter cette commande",
-                ephemeral: true,
+                flags: MessageFlags.Ephemeral
             });
         }
         
@@ -44,9 +44,9 @@ module.exports = {
                 return eventDate.getDate() === today.getDate() && eventDate.getMonth() === today.getMonth();
             });
             if (!notableDate) {
-                return interaction.some({
+                return interaction.reply({
                     content: `❌ Aucune évènement notable trouvé pour aujourd"hui`,
-                    ephemeral: true,
+                    flags: MessageFlags.Ephemeral
                 });
             }
 
@@ -74,14 +74,14 @@ module.exports = {
             });
             await interaction.reply({
                 content: `✅ Évènement notable publié avec succès dans ${targetChannel}.`,
-                ephemeral: true
+                flags: MessageFlags.Ephemeral
             });
             console.log(`[INFO] Notable date published successfully for ${formattedDate}.`);
         } catch (error) {
             console.error("[ERROR] Error while executing /datenotable command:", error);
             await interaction.reply({
                 content: "❌ Une erreur est survenue lors de l'affichage de l'évènement notable.",
-                ephemeral: true,
+                flags: MessageFlags.Ephemeral
             });
         }
     },

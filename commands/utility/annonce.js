@@ -11,7 +11,7 @@
  * - Response: Confirms the successful delivery of the announcement or returns an error message.
  */
 
-const { SlashCommandBuilder, PermissionFlagsBits, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const { SlashCommandBuilder, PermissionFlagsBits, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require("discord.js");
 const config = require("../../config.json");
 
 module.exports = {
@@ -47,7 +47,7 @@ module.exports = {
         if (!requiredRoles.some(roleId => memberRoles.has(roleId))) {
             return interaction.reply({
                 content: "❌ Vous n'avez pas les permissions nécessaires pour exécuter cette commande.",
-                ephemeral: true,
+                flags: MessageFlags.Ephemeral
             });
         }
 
@@ -61,7 +61,7 @@ module.exports = {
         if (!sourceChannel.isTextBased() || !targetChannel.isTextBased()) {
             return interaction.reply({
                 content: "L'un des canaux sélectionnés n'est pas textuel.",
-                ephemeral: true,
+                flags: MessageFlags.Ephemeral
             });
         }
 
@@ -75,7 +75,7 @@ module.exports = {
             console.error(error);
             return interaction.reply({
                 content: `Impossible de récupérer le message avec l'ID fourni : ${messageId}`,
-                ephemeral: true,
+                flags: MessageFlags.Ephemeral
             });
         }
 
@@ -102,13 +102,13 @@ module.exports = {
             await targetChannel.send(messageOptions);
             await interaction.reply({
                 content: `Annonce envoyée avec succès dans ${targetChannel} !`,
-                ephemeral: true,
+                flags: MessageFlags.Ephemeral
             });
         } catch (error) {
             console.error("[ERROR] An error occurred while sending the announcement:", error);
             await interaction.reply({
                 content: "Aie, quelque chose s'est mal passé avec /annonce...",
-                ephemeral: true,
+                flags: MessageFlags.Ephemeral
             });
         }
     },

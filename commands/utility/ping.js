@@ -5,7 +5,7 @@
  * - Response: Sends a confirmation that the bot is online.
  */
 
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, MessageFlags } = require("discord.js");
 const config = require("../../config.json");
 
 module.exports = {
@@ -19,12 +19,12 @@ module.exports = {
 		if (!requiredRoles.some(roleId => memberRoles.has(roleId))) {
 			return interaction.reply({
 				content: "❌ Tu n'as pas la permission d'exécuter cette commande. 🤖",
-				ephemeral: true,
+				flags: MessageFlags.Ephemeral
 			});
 		}
 		await interaction.reply({
-			"content": "Bien en ligne ! 🤖",
-			"ephemeral": true
+			content: "Bien en ligne ! 🤖",
+			flags: MessageFlags.Ephemeral
 		});
 	},
 };
