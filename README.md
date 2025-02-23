@@ -14,6 +14,8 @@ This bot was created for the Boaki Actu community, bringing together several hun
 - Automatically post notable events for the current day.
 - Role-based notifications and interactive button management.
 - Scheduled tasks for anecdotes and notable dates.
+- Automatically refresh the bot’s status based on configured activities.
+- Update existing bot messages
 
 
 ## **Installation**
@@ -82,6 +84,18 @@ node index.js
 - **Example**:
   ```
   /annonce canal_message:#announcements message_id:123456789 canal_envoi:#general everyone:true
+  ```
+
+#### `/modifiermessage`
+- **Description**: Modify an existing message sent by the bot by replacing its content with that of another.
+- **Parameters**:
+  - `canal_source`: Source channel of the message whose content will be copied.
+  - `source_message_id`: ID of the message to copy.
+  - `canal_modification`: Channel of the message to modify.
+  - `message_id`: ID of the message to modify.
+- **Example**:
+  ```
+  /modifiermessage canal_source:#general source_message_id:123456789 canal_modification:#announcements message_id:987654321
   ```
 
 #### `/datenotable`
